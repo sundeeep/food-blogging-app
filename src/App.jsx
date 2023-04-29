@@ -8,6 +8,7 @@ import Search from './pages/Search/Search';
 import Photography from './pages/Photography/Photography';
 import Blog from "./pages/Blog/Blog";
 import LogIn from './pages/LogIn/LogIn';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
   
@@ -16,11 +17,11 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route exact path={"/login"} element={<LogIn />} />
-          <Route exact path={"/"} element={<Home />} />
-          <Route exact path={"/dashboard"} element={<Dashboard />} />
-          <Route exact path={"/blog"} element={<Blog />} />
-          <Route exact path={"/search"} element={<Search />} />
-          <Route exact path={"/foodieinsta"} element={<Photography />} />
+          <Route exact path={"/"} element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route exact path={"/dashboard"} element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route exact path={"/blog"} element={<ProtectedRoute><Blog /></ProtectedRoute>} />
+          <Route exact path={"/search"} element={<ProtectedRoute><Search /></ProtectedRoute>} />
+          <Route exact path={"/foodieinsta"} element={<ProtectedRoute><Photography /></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </>
