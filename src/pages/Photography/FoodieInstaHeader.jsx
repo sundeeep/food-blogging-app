@@ -1,6 +1,17 @@
 import React from 'react'
 import CameraEnhanceRoundedIcon from "@mui/icons-material/CameraEnhanceRounded";
-const FoodieInstaHeader = ({OpenEditModal}) => {
+import LogoutIcon from "@mui/icons-material/Logout";
+import { SIGNOUT } from '../../redux/authSlice';
+import { auth } from '../../config/firebase.config';
+import { useNavigate } from 'react-router-dom';
+
+const FoodieInstaHeader = ({ OpenEditModal, userDetails, dispatch, signOut }) => {
+    const navigate = useNavigate();
+    const handleLogOut = async () => {
+        await signOut(auth);
+        dispatch(SIGNOUT());
+        navigate("/login", {replace:true});
+    }
     return (
         <header className={styles.headerGlassWrapper}>
             {/* TODO: Logo */}
@@ -20,8 +31,15 @@ const FoodieInstaHeader = ({OpenEditModal}) => {
                     <p>Create</p>
                 </button>
 
-                <div className={styles.userProfileWrapper}>
-                    <img className={styles.userProfileImage} src="https://media.licdn.com/dms/image/C5603AQH-leGj9lP6aQ/profile-displayphoto-shrink_400_400/0/1602593856364?e=1687996800&v=beta&t=yzvCleX0MhhC0R80XWcEwBx6Ux-XSrCImQTQU6nKdW4" alt="" />
+                <div className="flex items-center">
+                    <div className={styles.userProfileWrapper}>
+                        <img className={styles.userProfileImage} src={userDetails?.photoURL} alt="" />
+                    </div>
+                    <div className='group flex flex-col gap-1 items-center'>
+                        <h1 className='text-black font-semibold'>{userDetails?.displayName}</h1>
+                        <button onClick={handleLogOut}
+                            className="text-red-600 hover:text-red-800 text-sm"><LogoutIcon className="text-red-600 group-hover:text-red-800 text-sm" />Log Out</button>
+                    </div>
                 </div>
             </div>
         </header>

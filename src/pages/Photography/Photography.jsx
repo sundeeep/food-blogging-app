@@ -4,9 +4,17 @@ import FoodieInstaHeader from './FoodieInstaHeader';
 import FoodieInstaHero from './FoodieInstaHero';
 import FoodieInstaCreator from './FoodieInstaCreator';
 import EditModal from '../../components/EditModal';
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signOut
+} from "firebase/auth";
+
 
 const Photography = () => {
+
+  const dispatch = useDispatch();
   const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
+  const userDetails = useSelector((state) => state.googleAuth.userDetails);
     function OpenEditModal(name) {
       setIsEditModalOpen(true);
     }
@@ -15,7 +23,12 @@ const Photography = () => {
     }
   return (
     <div className={styles.gradientContainer}>
-      <FoodieInstaHeader OpenEditModal={OpenEditModal} />
+      <FoodieInstaHeader
+        OpenEditModal={OpenEditModal}
+        userDetails={userDetails}
+        dispatch={dispatch}
+        signOut={signOut}
+      />
       <div className={styles.glassContainer}>
         <FoodieInstaHero />
       </div>
