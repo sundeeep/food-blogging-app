@@ -9,6 +9,7 @@ const NavBar = () => {
             {navBar.map((navItem, index) => {
                 return (
                     <NavLink
+                        key={navItem.id}
                         to={navItem.link}
                         className={({isActive})=> isActive ?styles.activeNavItem :styles.navItem}
                     >
