@@ -1,6 +1,6 @@
 import React from 'react'
 
-const UploadWidget = ({ photosArray,setPhotosArray }) => {
+const UploadWidget = ({ mediaArray,buttonText }) => {
     const cloudinaryRef = React.useRef();
     const widgetRef = React.useRef();
     React.useEffect(() => {
@@ -13,7 +13,7 @@ const UploadWidget = ({ photosArray,setPhotosArray }) => {
             function (error, result) {
                 result.info.files?.map((file) => { 
                     console.log(photosArray)
-                    photosArray.push({
+                    mediaArray.push({
                         asset_id: file?.uploadInfo?.asset_id,
                         folder: file?.uploadInfo?.folder,
                         public_id: file?.uploadInfo?.public_id,
@@ -30,7 +30,7 @@ const UploadWidget = ({ photosArray,setPhotosArray }) => {
         className={styles.uploadButton}
         onClick={() => widgetRef.current.open()}
         >
-        Select Images
+        {buttonText}
         </button>
     );
 };
