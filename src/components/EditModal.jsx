@@ -12,6 +12,6 @@ const EditModal = ({ children, isEditModalOpen, CloseEditModal }) => {
     );
 };
 const styles = {
-    modalContainer: "absolute top-[50%] left-[50%] bg-white rounded-lg w-[500px] -translate-x-1/2 -translate-y-1/2 drop-shadow-3xl",
+    modalContainer: "absolute py-3 top-[50%] left-[50%] bg-white rounded-lg w-[500px] -translate-x-1/2 -translate-y-1/2 drop-shadow-3xl",
 }
 export default EditModal;

@@ -5,9 +5,14 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { doc, setDoc } from "firebase/firestore"; 
 import { v4 as uuidv4 } from "uuid";
 import { useSelector } from 'react-redux';
+import { db } from "../../../config/firebase.config";
+import AddIcon from "@mui/icons-material/Add";
 
 
 const RecipeCreator = ({ CloseModal }) => {
+
+    const [ingredientCount, setIngredientCount] = React.useState(0);
+    const [cookingStepsCount, setCookingStepsCount] = React.useState(0);
 
     const [ingredients, setIngredients] = React.useState([]);
     const [cookingSteps, setCookingSteps] = React.useState([]);
@@ -21,32 +26,52 @@ const RecipeCreator = ({ CloseModal }) => {
     const [water, setWater] = React.useState();
     const [photosArray, setPhotosArray] = React.useState([]);
     const [videosArray, setVideosArray] = React.useState([]);
+    const [bannerImageArray, setBannerImageArray] = React.useState([]);
     
 
-    console.log(ingredients);
-
-    const onIngredientsChange = (event) => {
-        setIngredients([...ingredients, event.target.value]);
-    }
-
-    const onCookingStepsChange = (event) => {
-        setCookingSteps([...cookingSteps, event.target.value]);
-    };
-
     const userDetails = useSelector((state) => state.googleAuth.userDetails);
-
     const handleCreateRecipe = async () => {
-        await setDoc(doc(db, "foodie-insta", uuidv4()), {
+        await setDoc(doc(db, "recipies", uuidv4()), {
+            noOfIngredients: ingredients.length,
+            ingredients: ingredients,
+            noOfCookingSteps: cookingSteps.length,
+            cookingSteps:cookingSteps,
+            carbs: carbs,
+            protiens: protiens,
+            fat: fat,
+            fibre: fibre,
+            vitaminsAndMinerals: vitaminsAndMinerals,
+            water: water,
             noOfPhotos: photosArray?.length,
             photosArray: photosArray,
+            noOfBannerImages: bannerImageArray?.length,
+            bannerImageArray: bannerImageArray,
+            noOfVideos: videosArray.length,
+            videosArray: videosArray,
             postedBy: userDetails.uid,
             datePosted: new Date(Date.now()),
             cuisineType: cuisineType,
             mealType: mealType,
-            postTitle: title,
-            postDescription: description,
         })
     }
+    const onIngredientsChange = (event) => {
+        event.preventDefault();
+        const target = event.target;
+        for (let i = 0; i <= ingredientCount; i++){
+            // setIngredients([...ingredients, target[i].value]);
+            ingredients.push(target[i].value);
+        }
+    }
+
+    const onCookingStepsChange = (event) => {
+        event.preventDefault();
+        const target = event.target;
+        for (let i = 0; i <= cookingStepsCount; i++){
+            // setCookingSteps([...cookingSteps, target[i].value]);
+            cookingSteps.push(target[i].value);
+        }
+    };
+
 
     return (
         <div className={styles.RecipeCreatorWrapper}>
@@ -63,68 +88,77 @@ const RecipeCreator = ({ CloseModal }) => {
                 </IconButton>
             </div>
 
+            <UploadWidget
+                mediaArray={bannerImageArray}
+                buttonText = "Upload Banner Image"
+            />
+
             <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between">
                 <h1 className="font-semibold text-xl">1. Ingredients</h1>
                 <button
-                onClick={() => {
-                    const ingredientDiv = document.querySelector("#ingredientDiv");
+                    onClick={() => {
+                    setIngredientCount(ingredientCount+1)
+                    const ingredientDiv = document.querySelector("#ingredientForm");
                     const input = document.createElement("input");
                     input.setAttribute("type", "text");
                     input.setAttribute("placeholder", "Add Ingredient");
-                    input.onclick = onIngredientsChange;
+                    input.setAttribute("name", "ingredient"+ingredientCount)
                     input.setAttribute(
                     "class",
                     "border border-zinc-700 rounded-lg focus:border-pink-700 outline-none p-3 w-full"
                     );
-                    return ingredientDiv.appendChild(input);
+                    return ingredientDiv.prepend(input);
                 }}
                 className="bg-gradient-to-br from-[#EC4899] via-[#D946EF] to-[#14B8A6] text-white font-semibold uppercase leading-lg rounded-lg px-3 py-1"
                 >
                 Add Ingredient
                 </button>
             </div>
-            <div id="ingredientDiv" className="w-full flex flex-col gap-3">
-                <input
-                type="text"
-                onChange={onIngredientsChange}
-                className={styles.textField}
+                <form onSubmit={onIngredientsChange} id="ingredientForm" className="w-full flex flex-col gap-3">
+                    <input
+                        type="text"
+                        className={styles.textField}
+                        name={"ingredient"+ingredientCount}
                 placeholder="Add Ingredient"
                 />
-            </div>
+                <button type="submit" className="bg-gradient-to-br from-[#EC4899] via-[#D946EF] to-[#14B8A6] text-white font-semibold uppercase leading-lg rounded-lg px-3 py-1">Submit Ingredients</button>
+            </form>
             </div>
 
             <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between">
                 <h1 className="font-semibold text-xl">2. Cooking Steps</h1>
                 <button
-                onClick={() => {
-                    const cookingStepsDiv =
-                    document.querySelector("#cookingStepsDiv");
+                    onClick={() => {
+                    setCookingStepsCount(cookingStepsCount + 1);
+                    const cookingStepsForm = document.querySelector("#cookingStepsForm");
                     const input = document.createElement("input");
                     input.setAttribute("type", "text");
-                    input.setAttribute("placeholder", "Add Cooking Step");
-                    input.onclick = onCookingStepsChange;
+                    input.setAttribute("placeholder", "Add Ingredient");
+                    input.setAttribute("name", "ingredient"+ingredientCount)
                     input.setAttribute(
                     "class",
                     "border border-zinc-700 rounded-lg focus:border-pink-700 outline-none p-3 w-full"
                     );
-                    return cookingStepsDiv.appendChild(input);
+                    return cookingStepsForm.prepend(input);
                 }}
                 className="bg-gradient-to-br from-[#EC4899] via-[#D946EF] to-[#14B8A6] text-white font-semibold uppercase leading-lg rounded-lg px-3 py-1"
                 >
                 Add Cooking Step
                 </button>
             </div>
-            <div id="cookingStepsDiv" className="w-full flex flex-col gap-3">
-                <input
-                type="text"
-                onChange={onCookingStepsChange}
-                className={styles.textField}
+                <form onSubmit={onCookingStepsChange} id="cookingStepsForm" className="w-full flex flex-col gap-3">
+                    <input
+                        type="text"
+                        className={styles.textField}
+                        name={"cookingStep"+cookingStepsCount}
                 placeholder="Add Cooking Step"
                 />
+                <button type="submit" className="bg-gradient-to-br from-[#EC4899] via-[#D946EF] to-[#14B8A6] text-white font-semibold uppercase leading-lg rounded-lg px-3 py-1">Submit Cooking Steps</button>
+            </form>
             </div>
-            </div>
+
             <div className="flex flex-col gap-3">
                 <h1 className="font-semibold text-xl">3. Cuisine & Meal Type</h1>
                 <input

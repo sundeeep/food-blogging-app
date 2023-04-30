@@ -12,7 +12,6 @@ const UploadWidget = ({ mediaArray,buttonText }) => {
         },
             function (error, result) {
                 result.info.files?.map((file) => { 
-                    console.log(photosArray)
                     mediaArray.push({
                         asset_id: file?.uploadInfo?.asset_id,
                         folder: file?.uploadInfo?.folder,
