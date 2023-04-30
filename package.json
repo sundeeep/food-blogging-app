@@ -29,7 +29,9 @@
     "react-router-dom": "^6.11.0",
     "react-share": "^4.4.1",
     "react-toastify": "^9.1.2",
-    "redux": "^4.2.1"
+    "redux": "^4.2.1",
+    "uuid": "^9.0.0",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

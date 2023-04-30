@@ -1,7 +1,7 @@
 import { TextField, Box } from '@mui/material'
 import React from 'react'
 
-const SingleTextEditor = ({label, onChangeHandler, color, variant}) => {
+const SingleTextEditor = ({label, onChangeHandler, color, variant, value}) => {
     return (
         <Box className='w-[100%]'>
             <TextField 
@@ -12,7 +12,7 @@ const SingleTextEditor = ({label, onChangeHandler, color, variant}) => {
                 size={"small"}
                 // type={type}
                 onChange={onChangeHandler}
-                // value={value}
+                value={value}
                 />
         </Box>
     )

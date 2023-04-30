@@ -5,10 +5,11 @@ import {
     signInWithPopup,
     onAuthStateChanged
 } from "firebase/auth";
-import { auth } from '../../config/firebase.config';
+import { auth, db } from '../../config/firebase.config';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { SIGNIN } from '../../redux/authSlice'
+import { doc, setDoc } from "firebase/firestore"; 
 
 const LogIn = () => {
     const navigate = useNavigate();
@@ -17,10 +18,16 @@ const LogIn = () => {
     const [user, setUser] = React.useState();
 
     
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        const unsubscribe = onAuthStateChanged(auth, async(currentUser) => {
             setUser(currentUser);
             dispatch(SIGNIN(user));
-            console.log("User", userDetails);
+            await setDoc(doc(db, "users", userDetails.uid), {
+                id: userDetails.uid,
+                displayName: userDetails.displayName,
+                email: userDetails.email,
+                photoURL: userDetails.photoURL,
+                uid: userDetails.uid
+            })
             if (userDetails.accessToken) {
                 navigate("/", {replace: true})
             }
