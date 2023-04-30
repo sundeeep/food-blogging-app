@@ -1,12 +1,3 @@
-// import {
-//     GoogleAuthProvider,
-//     signInWithPopup,
-//     signInWithRedirect,
-//     signOut,
-//     onAuthStateChanged,
-// } from "firebase/auth";
-// import { auth } from "../config/firebase.config";
-
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
