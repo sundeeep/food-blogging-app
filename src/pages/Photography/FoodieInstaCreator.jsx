@@ -47,6 +47,7 @@ const FoodieInstaCreator = ({ CloseModal}) => {
             <input type="text" onChange={(e)=>setTitle(e.target.value)} className={styles.textField} placeholder="Enter Title"/>
             <input type="text" onChange={(e)=>setDescription(e.target.value)} className={styles.textField} placeholder="Enter Description"/>
             <UploadWidget
+                buttonText="Upload Images"
                 photosArray={ photosArray}
                 setPhotosArray={setPhotosArray}
             />

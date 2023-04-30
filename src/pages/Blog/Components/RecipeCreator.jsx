@@ -135,7 +135,7 @@ const RecipeCreator = ({ CloseModal }) => {
                     const cookingStepsForm = document.querySelector("#cookingStepsForm");
                     const input = document.createElement("input");
                     input.setAttribute("type", "text");
-                    input.setAttribute("placeholder", "Add Ingredient");
+                    input.setAttribute("placeholder", "Add Cooking Step");
                     input.setAttribute("name", "ingredient"+ingredientCount)
                     input.setAttribute(
                     "class",

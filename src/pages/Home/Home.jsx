@@ -5,7 +5,17 @@ const Home = () => {
     return (
         <div className={styles.gradientContainer}>
             <div className={styles.glassContainer}>
+                <header>
+                    <div></div>
+                    <div className='h-[50vh] w-[100%]'>
+                        <img src="" alt="" />
+                    </div>
+                </header>
+                <main>
+                    <section>
 
+                    </section>
+                </main>
             </div>
             <NavBar />
         </div>
